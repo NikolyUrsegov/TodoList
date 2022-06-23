@@ -6,3 +6,15 @@
 .App > div {
   margin-right: 50px;
 }
+
+.isDone {
+  text-decoration: line-through;
+}
+.active {
+  background-color: darksalmon;
+  color: white;
+}
+.error {
+  border: 1px solid red;
+  outline: none;
+}
