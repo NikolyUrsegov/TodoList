@@ -3,6 +3,8 @@ import './App.css';
 import TodoList, {TaskType} from "./TodoList";
 import {v1} from "uuid";
 import AddItemForm from "./AddItemForm";
+import {AppBar, Toolbar, IconButton, Typography, Button, Container, Grid, Paper} from "@material-ui/core";
+import {Menu} from "@material-ui/icons";
 
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
@@ -88,38 +90,64 @@ function App() {
 
     return (
         <div className="App">
-            <AddItemForm addItem={addTodoList}/>
-            {todolists.map(el => {
-                let allTodoListTasks = tasks[el.id]
-                let tasksForRender = allTodoListTasks;
-                switch (el.filter) {
-                    case "active":
-                        tasksForRender = allTodoListTasks.filter(t => t.isDone === false)
-                        break
-                    case "completed":
-                        tasksForRender = allTodoListTasks.filter(t => t.isDone === true)
-                        break
-                    default:
-                        tasksForRender = allTodoListTasks
-                }
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton edge="start" color="inherit" aria-label="menu">
+                        <Menu/>
+                    </IconButton>
+                    <Typography variant="h6">
+                        News
+                    </Typography>
+                    <Button color="inherit">Login</Button>
+                </Toolbar>
+            </AppBar>
+            <Container>
+                <Grid container style={{padding: '20px'}}>
+                    <AddItemForm addItem={addTodoList}/>
+                </Grid>
+                <Grid
+                    container
+                    spacing={3}
+                    justifyContent={"center"}
+                >
+                    {todolists.map(el => {
+                        let allTodoListTasks = tasks[el.id]
+                        let tasksForRender = allTodoListTasks;
+                        switch (el.filter) {
+                            case "active":
+                                tasksForRender = allTodoListTasks.filter(t => t.isDone === false)
+                                break
+                            case "completed":
+                                tasksForRender = allTodoListTasks.filter(t => t.isDone === true)
+                                break
+                            default:
+                                tasksForRender = allTodoListTasks
+                        }
 
-                return <TodoList
-                    key={el.id}
-                    title={el.title}
-                    id={el.id}
-                    tasks={tasksForRender}
-                    filter={el.filter}
-                    removeTask={removeTask}
-                    removeTodoList={removeTodoList}
-                    changeTodoListFilter={changeTodoListFilter}
-                    addTask={addTask}
-                    changeTaskStatus={changeTaskStatus}
-                    changeTaskTitle={changeTaskTitle}
-                    changeTodolistTitle={changeTodolistTitle}
-                />
-            })}
+                        return (
+                            <Grid item key={el.id}>
+                                <Paper style={{padding: '10px'}}>
+                                    <TodoList
+                                        title={el.title}
+                                        id={el.id}
+                                        tasks={tasksForRender}
+                                        filter={el.filter}
+                                        removeTask={removeTask}
+                                        removeTodoList={removeTodoList}
+                                        changeTodoListFilter={changeTodoListFilter}
+                                        addTask={addTask}
+                                        changeTaskStatus={changeTaskStatus}
+                                        changeTaskTitle={changeTaskTitle}
+                                        changeTodolistTitle={changeTodolistTitle}
+                                    />
+                                </Paper>
+                            </Grid>
+                        )
+                    })}
+                </Grid>
+            </Container>
         </div>
-    );
+    )
 }
 
 export default App;

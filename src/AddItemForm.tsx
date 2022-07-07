@@ -1,4 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {TextField, IconButton} from "@material-ui/core";
+import {AddCircle} from "@material-ui/icons";
 
 type AddItemFormPropsType = {
     addItem: (value: string) => void
@@ -6,20 +8,20 @@ type AddItemFormPropsType = {
 
 const AddItemForm = (props: AddItemFormPropsType) => {
     const [title, setTitle] = useState<string>('')
-    const [error, setError] = useState<boolean>(false)
+    const [error, setError] = useState<string>('')
 
     const onAddTaskClickHandler = () => {
         const trimmedTitle = title.trim()
         if (trimmedTitle) {
             props.addItem(trimmedTitle)
         } else {
-            setError(true)
+            setError('Title is required')
         }
         setTitle('')
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
-        error && setError(false)
+        error && setError('')
     }
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -30,12 +32,18 @@ const AddItemForm = (props: AddItemFormPropsType) => {
 
     return (
         <div>
-            <input value={title}
-                   className={error ? 'error' : ''}
-                   onChange={onChangeHandler}
-                   onKeyDown={onKeyDownHandler}/>
-            <button onClick={onAddTaskClickHandler}>+</button>
-            {error && <div style={{color: 'red'}}>Title is required</div>}
+            <TextField
+                variant={'outlined'}
+                value={title}
+                error={!!error}
+                onChange={onChangeHandler}
+                onKeyDown={onKeyDownHandler}
+                label={'Task'}
+                helperText={error}
+            />
+            <IconButton  color={'primary'} onClick={onAddTaskClickHandler}>
+                <AddCircle/>
+            </IconButton>
         </div>
     );
 };
