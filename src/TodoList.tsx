@@ -2,8 +2,9 @@ import React from 'react';
 import {FilterValuesType} from "./App";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
-import {Button, Checkbox, IconButton} from "@material-ui/core";
+import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
+import CheckBoxComponent from "./state/CheckBoxComponent";
 
 
 export type TaskType = {
@@ -36,6 +37,9 @@ const TodoList = (props: TodoListPropsType) => {
     const onAllClickHandler = () => props.changeTodoListFilter('all', props.id)
     const onActiveClickHandler = () => props.changeTodoListFilter('active', props.id)
     const onCompleteClickHandler = () => props.changeTodoListFilter('completed', props.id)
+    const changeTaskStatus = (id: string, isDone: boolean) => {
+        props.changeTaskStatus(id, isDone, props.id)
+    }
 
     return (
         <div>
@@ -58,13 +62,13 @@ const TodoList = (props: TodoListPropsType) => {
                         const onChangeTask = (title: string) => {
                             props.changeTaskTitle(item.id, title, props.id)
                         }
+                        const changeTaskStatusHandler = (isDone: boolean) => {
+                            changeTaskStatus(item.id, isDone)
+                        }
 
                         return (
                             <div key={item.id}>
-                                <Checkbox
-                                    onChange={(e) => props.changeTaskStatus(item.id, e.currentTarget.checked, props.id)}
-                                    color={'primary'}
-                                    checked={item.isDone}/>
+                                <CheckBoxComponent isDone={item.isDone} changeTaskStatus={changeTaskStatusHandler}/>
                                 <EditableSpan
                                     title={item.title}
                                     class={item.isDone ? 'isDone' : ''}
