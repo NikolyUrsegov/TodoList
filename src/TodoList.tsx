@@ -4,7 +4,7 @@ import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import CheckBoxComponent from "./state/CheckBoxComponent";
+import CheckBoxComponent from "./CheckBoxComponent";
 
 
 export type TaskType = {
