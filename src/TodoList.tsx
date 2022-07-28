@@ -1,17 +1,12 @@
 import React from 'react';
-import {FilterValuesType} from "./App";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import CheckBoxComponent from "./CheckBoxComponent";
+import {TaskType} from "./state/tasks-reducer";
+import {FilterValuesType} from "./state/todolists-reducer";
 
-
-export type TaskType = {
-    id: string,
-    title: string,
-    isDone: boolean
-}
 type TodoListPropsType = {
     title: string,
     id: string,
