@@ -1,8 +1,8 @@
 import React, {useCallback, memo} from 'react';
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
-import {Button, IconButton} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
+import {Button, IconButton} from '@mui/material';
+import {Delete} from "@mui/icons-material";
 import {TaskType} from "./state/tasks-reducer";
 import {FilterValuesType} from "./state/todolists-reducer";
 import Task1 from "./Task1";
@@ -64,7 +64,7 @@ const TodoList = memo((props: TodoListPropsType) => {
             </div>
             <AddItemForm addItem={addTaskItem}/>
             <div>
-                {tasksForRender ?
+                {tasksForRender.length !== 0 ?
                     tasksForRender.map(item => {
                         return (
                             <Task1 key={item.id} task={item} todolistId={props.id}/>

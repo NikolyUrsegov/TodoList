@@ -1,8 +1,8 @@
 import React, {memo, useCallback} from 'react';
 import CheckBoxComponent from "./CheckBoxComponent";
 import EditableSpan from "./EditableSpan";
-import {IconButton} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
+import {IconButton} from '@mui/material';
+import {Delete} from "@mui/icons-material";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskType} from "./state/tasks-reducer";
 import {useDispatch} from "react-redux";
 

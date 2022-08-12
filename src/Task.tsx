@@ -1,8 +1,8 @@
 import React, {memo} from 'react';
 import CheckBoxComponent from "./CheckBoxComponent";
 import EditableSpan from "./EditableSpan";
-import {IconButton} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
+import {IconButton} from '@mui/material';
+import {Delete} from "@mui/icons-material";
 import {TaskType} from "./state/tasks-reducer";
 
 type TaskPropsType = {

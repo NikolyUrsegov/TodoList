@@ -2,8 +2,8 @@ import React, {useCallback} from 'react';
 import './App.css';
 import TodoList from "./TodoList";
 import AddItemForm from "./AddItemForm";
-import {AppBar, Toolbar, IconButton, Typography, Button, Container, Grid, Paper} from "@material-ui/core";
-import {Menu} from "@material-ui/icons";
+import {AppBar, Toolbar, IconButton, Typography, Button, Container, Grid, Paper} from '@mui/material';
+import {Menu} from "@mui/icons-material";
 import {
     addTodolistAC,
     changeFilterAC,
