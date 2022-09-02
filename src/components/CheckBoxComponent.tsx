@@ -1,12 +1,13 @@
 import React, {ChangeEvent, memo} from 'react';
+import {TaskStatuses} from "../api/todolists-api";
 
 
 type CheckBoxComponentPropsType = {
-    isDone: boolean
+    status: TaskStatuses
     changeTaskStatus: (isDone: boolean) => void
+    disabled?: boolean
 }
 const CheckBoxComponent = memo((props: CheckBoxComponentPropsType) => {
-    console.log('CheckBoxComponent')
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         props.changeTaskStatus(e.currentTarget.checked)
     }
@@ -14,7 +15,9 @@ const CheckBoxComponent = memo((props: CheckBoxComponentPropsType) => {
         <input
             type={'checkbox'}
             onChange={onChangeHandler}
-            checked={props.isDone}/>
+            checked={props.status === TaskStatuses.Completed}
+            disabled={props.disabled}
+        />
     );
 });
 
