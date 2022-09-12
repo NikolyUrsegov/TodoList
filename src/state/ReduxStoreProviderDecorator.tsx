@@ -37,7 +37,12 @@ const initialGlobalState = {
     },
     app: {
         status: 'loading' as RequestStatusType,
-        error: null as null | string
+        error: null as null | string,
+        isInitialized: true
+
+    },
+    auth: {
+        isLoggedIn: true
     }
 };
 

@@ -1,18 +1,18 @@
 import React, {memo, useCallback} from 'react';
-import CheckBoxComponent from "./CheckBoxComponent";
-import EditableSpan from "./EditableSpan";
+import CheckBoxComponent from "../../../../components/CheckBoxComponent";
+import EditableSpan from "../../../../components/EditableSpan";
 import {IconButton} from '@mui/material';
 import {Delete} from "@mui/icons-material";
-import {FullTaskType, removeTaskTC, updateTaskTC} from "../state/reducers/tasks-reducer";
+import {FullTaskType, removeTaskTC, updateTaskTC} from "../../../../state/reducers/tasks-reducer";
 import {useDispatch} from "react-redux";
-import {TaskStatuses} from "../api/todolists-api";
-import {AppDispatch} from "../state/store";
+import {TaskStatuses} from "../../../../api/todolists-api";
+import {AppDispatch} from "../../../../state/store";
 
 type TaskPropsType = {
     task: FullTaskType
     todolistId: string
 }
-const Task1 = memo(({task, todolistId}: TaskPropsType) => {
+const Task = memo(({task, todolistId}: TaskPropsType) => {
     const dispatch = useDispatch<AppDispatch>()
 
     const onRemoveTask = () => {
@@ -42,4 +42,4 @@ const Task1 = memo(({task, todolistId}: TaskPropsType) => {
     );
 });
 
-export default Task1;
+export default Task;

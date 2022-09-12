@@ -1,29 +1,61 @@
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+import {Dispatch} from "redux";
+import {authAPI} from "../../api/todolists-api";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
+import axios from "axios";
+import {setIsLoggedInAC} from "../../state/reducers/auth-reducer";
 
-const initialState = {
-    status: 'idle' as RequestStatusType,
-    error: null as null | string
+const initialState: InitialStateType = {
+    status: 'idle',
+    error: null,
+    isInitialized: false
 }
 
-type InitialStateType = typeof initialState
-
-export const appReducer = (state: InitialStateType = initialState, action: ActionsAppType): InitialStateType => {
+export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case 'APP/SET-STATUS': {
+        case 'APP/SET-STATUS':
             return {...state, status: action.status}
-        }
-        case "APP/SET-ERROR":{
+        case 'APP/SET-ERROR':
             return {...state, error: action.error}
-        }
+        case "APP/SET-IS_INITIALIZED":
+            return {...state, isInitialized: action.isInitialized}
         default:
-            return state
+            return {...state}
     }
 }
 
-export const setAppStatusAC = (status: RequestStatusType) => ({type:'APP/SET-STATUS', status} as const)
-export type SetAppStatusACType = ReturnType<typeof setAppStatusAC>
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+export type InitialStateType = {
+    status: RequestStatusType
+    error: string | null
+    isInitialized: boolean
+}
 
-export const setAppErrorAC = (error: string | null) => ({type:'APP/SET-ERROR', error} as const)
-export type SetAppErrorACType = ReturnType<typeof setAppErrorAC>
+export const setAppErrorAC = (error: string | null) => ({type: 'APP/SET-ERROR', error} as const)
+export const setAppStatusAC = (status: RequestStatusType) => ({type: 'APP/SET-STATUS', status} as const)
+export const setIsInitializedAC = (isInitialized: boolean) => ({type: 'APP/SET-IS_INITIALIZED', isInitialized} as const)
 
-type ActionsAppType = SetAppStatusACType | SetAppErrorACType
+export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
+export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
+export type SetIsInitializedActionType = ReturnType<typeof setIsInitializedAC>
+
+export const initializeAppTC = () => async (dispatch: Dispatch) => {
+    try {
+        const res = await authAPI.me()
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(true))
+        } else {
+            handleServerAppError(res.data, dispatch)
+        }
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            handleServerNetworkError(e, dispatch)
+        }
+    } finally {
+        dispatch(setIsInitializedAC(true))
+    }
+}
+
+type ActionsType =
+    | SetAppErrorActionType
+    | SetAppStatusActionType
+    | SetIsInitializedActionType

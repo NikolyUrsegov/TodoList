@@ -1,15 +1,15 @@
 import React, {useCallback, memo, useEffect} from 'react';
-import AddItemForm from "./AddItemForm";
-import EditableSpan from "./EditableSpan";
+import AddItemForm from "../../../components/AddItemForm";
+import EditableSpan from "../../../components/EditableSpan";
 import {Button, IconButton} from '@mui/material';
 import {Delete} from "@mui/icons-material";
-import {FilterValuesType} from "../state/reducers/todolists-reducer";
-import Task1 from "./Task1";
-import {TaskStatuses} from "../api/todolists-api";
-import {FullTaskType, getTaskTC} from "../state/reducers/tasks-reducer";
+import {FilterValuesType} from "../../../state/reducers/todolists-reducer";
+import Task from "./Task/Task";
+import {TaskStatuses} from "../../../api/todolists-api";
+import {FullTaskType, getTaskTC} from "../../../state/reducers/tasks-reducer";
 import {useDispatch} from "react-redux";
-import {AppDispatch} from "../state/store";
-import {RequestStatusType} from "../state/reducers/app-reducer";
+import {AppDispatch} from "../../../state/store";
+import {RequestStatusType} from "../../../state/reducers/app-reducer";
 
 type TodoListPropsType = {
     title: string
@@ -77,7 +77,7 @@ const TodoList = memo((props: TodoListPropsType) => {
                 {tasksForRender.length !== 0 ?
                     tasksForRender.map(item => {
                         return (
-                            <Task1 key={item.id} task={item} todolistId={props.id}/>
+                            <Task key={item.id} task={item} todolistId={props.id}/>
                         )
                     })
                     :
