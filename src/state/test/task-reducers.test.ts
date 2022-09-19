@@ -35,7 +35,7 @@ beforeEach(() => {
 })
 
 test('correct task should be deleted from correct array', () => {
-    const action = removeTaskAC("2", "todolistId2");
+    const action = removeTaskAC({taskId: "2", todolistId: "todolistId2"});
     const endState = tasksReducer(startState, action)
 
     expect(endState).toEqual({
@@ -61,7 +61,7 @@ test('correct task should be added to correct array', () => {
     const task = { id: "1", title: "juce", status: TaskStatuses.New, todoListId: "todolistId1", description: '',
         startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low }
 
-    const action = addTaskAC(task, "todolistId2");
+    const action = addTaskAC({task, todolistId: "todolistId2"});
     const endState = tasksReducer(startState, action)
 
     expect(endState["todolistId1"].length).toBe(3);
@@ -75,7 +75,7 @@ test('status of specified task should be changed', () => {
     const task = { id: "2", title: "juce", status: TaskStatuses.New, todoListId: "todolistId2", description: '',
         startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low }
 
-    const action = changeUpdateTaskAC("2", task, "todolistId2");
+    const action = changeUpdateTaskAC({taskId: "2", task, todolistId: "todolistId2"});
     const endState = tasksReducer(startState, action)
 
     expect(endState["todolistId2"][1].status).toBe(TaskStatuses.New);
@@ -87,7 +87,7 @@ test('title of specified task should be changed', () => {
     const task = { id: "2", title: "juce", status: TaskStatuses.New, todoListId: "todolistId2", description: '',
         startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low }
 
-    const action = changeUpdateTaskAC("2", task, "todolistId2");
+    const action = changeUpdateTaskAC({taskId: "2", task, todolistId: "todolistId2"});
     const endState = tasksReducer(startState, action)
 
     expect(endState["todolistId2"][1].title).toBe("juce");
@@ -97,7 +97,7 @@ test('title of specified task should be changed', () => {
 
 test('new array should be added when new todolist is added', () => {
     const todolist = {id: 'todolistId3', title: 'What to learn', filter: 'all', addedDate: '', order: 0}
-    const action = addTodolistAC(todolist);
+    const action = addTodolistAC({todolist});
     const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState);
     const newKey = keys.find(k => k != "todolistId1" && k != "todolistId2");
@@ -110,7 +110,7 @@ test('new array should be added when new todolist is added', () => {
 });
 
 test('property with todolistId should be deleted', () => {
-    const action = removeTodolistAC("todolistId2");
+    const action = removeTodolistAC({todolistId: "todolistId2"});
     const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState);
 
