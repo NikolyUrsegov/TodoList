@@ -27,8 +27,8 @@ const TodolistList = () => {
     const removeTodoList = useCallback((id: string) => {
         dispatch(deleteTodolistTC(id))
     }, [dispatch])
-    const changeTodoListFilter = useCallback((filter: FilterValuesType, todolistID: string) => {
-        dispatch(changeTodolistFilterAC(todolistID, filter))
+    const changeTodoListFilter = useCallback((filter: FilterValuesType, todolistId: string) => {
+        dispatch(changeTodolistFilterAC({id: todolistId, filter}))
     }, [dispatch])
     const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
         dispatch(updateTodolistTC(todolistId, title))
