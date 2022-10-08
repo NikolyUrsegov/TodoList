@@ -18,16 +18,19 @@ import {AppDispatch, AppRootStateType} from "../state/store";
 import {initializeAppTC, RequestStatusType} from "../state/reducers/app-reducer";
 import TodolistList from "../features/TodolistsList/TodolistList";
 
+type AppPropsType = {
+    demo?: boolean
+}
 
-
-function App() {
+export const App: React.FC<AppPropsType> = ({demo}) => {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
-        dispatch(initializeAppTC())
+        !demo && dispatch(initializeAppTC())
+
     }, [])
 
     const logoutHandler = () => {
